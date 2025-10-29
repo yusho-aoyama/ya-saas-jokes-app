@@ -13,14 +13,19 @@
             </h3>
         </header>
 
-        <div class="flex gap-4">
+        <form action="{{ route('admin.categories.update', $category) }}"
+              method="POST">
+
+            @csrf
+            @method('PUT')
+        <div class="flex flex-col gap-4">
 
             <x-input-label for="Title">Name</x-input-label>
             <x-text-input name="title"
                           id="Title"
                           type="text"
                           placeholder="Category title"
-                          :value="old('title') ?? $category->title"
+                          value="{{ old('title') ?? $category->title }}"
                           required autofocus
                           autocomplete="title"
             />
@@ -31,37 +36,40 @@
                           id="Description"
                           type="text"
                           placeholder="Category description"
-                          :value="old('description') ?? $category->description"
+                          value="{{ old('description') ?? $category->description }}"
                           required autofocus
                           autocomplete="description"
             />
             <x-input-error :messages="$errors->get('description')" class="mt-2"></x-input-error>
 
         </div>
-        <footer>
-            <x-primary-link-button
-                href="{{ route('admin.categories.show', $category) }}"
-                class="hover:bg-sky-500 gap-4">
-                <i class="fa-solid fa-list"></i>
-                <span>All Categories</span>
-            </x-primary-link-button>
+        <footer class="mt-8">
 
-            <x-primary-link-button
-                href="{{ route('admin.categories.edit', $category) }}"
-                class="hover:bg-green-500">
-                <i class="fa-solid fa-edit"></i>
-                <span>Edit</span>
-            </x-primary-link-button>
 
-            <x-secondary-link-button
-                href="{{ route('admin.categories.delete', $category) }}"
-                class="bg-red-100 hover:bg-red-500
-                                   text-gray-500! hover:text-white!">
-                <i class="fa-solid fa-times"></i>
-                <span>Delete</span>
-            </x-secondary-link-button>
+                <x-primary-link-button
+                    href="{{ route('admin.categories.index') }}"
+                    class="hover:bg-sky-500 gap-4">
+                    <i class="fa-solid fa-list"></i>
+                    <span>All Categories</span>
+                </x-primary-link-button>
+
+                <x-primary-button
+                    type="submit"
+                    class="hover:bg-green-500">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save</span>
+                </x-primary-button>
+
+                <x-secondary-link-button
+                    href="{{ route('admin.categories.index') }}"
+                    class="bg-red-100 hover:bg-red-500
+                                       text-gray-500! hover:text-white!">
+                    <i class="fa-solid fa-times"></i>
+                    <span>Cancel</span>
+                </x-secondary-link-button>
 
         </footer>
+        </form>
     </section>
 
 </x-admin-layout>

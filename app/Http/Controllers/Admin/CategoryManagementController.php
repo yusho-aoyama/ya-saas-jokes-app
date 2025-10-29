@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class CategoryManagementController extends Controller
@@ -63,9 +64,25 @@ class CategoryManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $oldCategory = $category;
+
+        $validated = $request->validate([
+            'title'=>[
+                'required',
+                'min:3',
+                'max:64',
+                Rule::unique('categories', 'title')->ignore($category)
+                ],
+            'description' => [
+                'nullable',
+                'max:265',
+            ]
+        ]);
+
+        $category->update($validated);
+        return to_route('admin.categories.index');
     }
 
     /**

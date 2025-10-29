@@ -12,16 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id();       // unsigned big integer, which is autoincrement and PK
+            $table->string('title', 64);    //title
+            $table->string('description', 255)  //description
+                    -> nullable();
+            $table->timestamps();   // created_at, updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('categories');
-    }
+//    /**
+//     * Reverse the migrations.
+//     */
+//    public function down(): void
+//    {
+//        Schema::dropIfExists('categories');
+//    }
 };

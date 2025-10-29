@@ -27,7 +27,30 @@
                 <tr class="odd:bg-gray-100">
                     <td class="p-2">{{ $category->title }}</td>
                     <td class="p-2">{{ $category->description }}</td>
-                    <td class="p-2">Shoe Edit Delete</td>
+
+                    <td class="p-2 flex gap-4">
+                        <x-primary-link-button
+                            href="{{ route('admin.categories.show', $category) }}"
+                            class="hover:bg-sky-500">
+                            <i class="fa-solid fa-eye pe-2"></i>
+                            <span class="sr-only">Show</span>
+                        </x-primary-link-button>
+
+                        <x-primary-link-button
+                            href="{{ route('admin.categories.edit', $category) }}"
+                            class="hover:bg-green-500">
+                            <i class="fa-solid fa-edit pe-2"></i>
+                            <span class="sr-only">Edit</span>
+                        </x-primary-link-button>
+
+                        <x-secondary-link-button
+                            href="{{ route('admin.categories.delete', $category) }}"
+                            class="bg-red-100 hover:bg-red-500
+                                   text-gray-500! hover:text-white!">
+                            <i class="fa-solid fa-times pr-2"></i>
+                            <span class="sr-only">Delete</span>
+                        </x-secondary-link-button>
+                    </td>
                 </tr>
             @empty
                 <tr>

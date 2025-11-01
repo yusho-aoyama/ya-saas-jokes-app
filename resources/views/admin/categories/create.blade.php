@@ -9,7 +9,7 @@
 
         <header class="flex justify-between">
             <h3 class="text-2xl font-bold text-zinc-700">
-                {{__('Categories')}}: <i class="fa-solid fa-edit"></i> {{ __('Edit') }}
+                {{__('Categories')}}: <i class="fa-solid fa-edit"></i> {{ __('Create') }}
             </h3>
 
             <x-primary-link-button
@@ -20,11 +20,10 @@
 
         </header>
 
-        <form action="{{ route('admin.categories.update', $category) }}"
+        <form action="{{ route('admin.categories.store') }}"
               method="POST">
 
             @csrf
-            @method('PUT')
 
             <div class="flex flex-col gap-4">
                 <x-input-label for="Title">Title</x-input-label>
@@ -32,7 +31,7 @@
                               id="Title"
                               type="text"
                               placeholder="Category title"
-                              value="{{ old('title') ?? $category->title }}"
+                              value="{{ old('title') }}"
                               required autofocus
                               autocomplete="title"
                 />
@@ -43,7 +42,7 @@
                               id="Description"
                               type="text"
                               placeholder="Category description"
-                              value="{{ old('description') ?? $category->description }}"
+                              value="{{ old('description')}}"
                               required autofocus
                               autocomplete="description"
                 />
@@ -67,7 +66,7 @@
                 </x-primary-button>
 
                 <x-secondary-link-button
-                    href="{{ route('admin.categories.show', $category) }}"
+                    href="{{ route('admin.categories.index') }}"
                     class="hover:bg-red-500!
                         text-gray-500! hover:text-white!
                          gap-4">

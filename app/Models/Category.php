@@ -26,9 +26,7 @@ class Category extends Model
      *
      * @var list<string>
      */
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     /**
      * Get the attributes that should be cast.
@@ -38,8 +36,8 @@ class Category extends Model
     protected function casts(): array
     {
         return [
-            'title'=>AsStringable::class,
-            'description'=>AsStringable::class
+            'title' => AsStringable::class,
+            'description' => AsStringable::class,
         ];
     }
 
@@ -59,6 +57,5 @@ class Category extends Model
         }
         return ($this->description->words($words));
     }
-
 
 }

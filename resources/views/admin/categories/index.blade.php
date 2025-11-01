@@ -7,21 +7,34 @@
 
     <section class="py-12 mx-12 space-y-4">
 
-        <header>
+        <header class="flex justify-between">
             <h3 class="text-2xl font-bold text-zinc-700">
                 {{__('Categories')}}
             </h3>
+
+            <div>
+                <x-primary-link-button
+                    href="{{ route('admin.categories.create') }}">
+                    <i class="fa-solid fa-plus"></i>
+                    New Category
+                </x-primary-link-button>
+
+                <div class="text-sm capitalize">
+                    Add Search Form Here
+                </div>
+
+            </div>
         </header>
 
         <table class="table w-full bg-white border">
             <thead class="bg-black text-gray-200">
-                {{-- tr>th*3 --}}
             <tr>
                 <th class="p-2">Name</th>
                 <th class="p-2">Description</th>
                 <th class="p-2">Actions</th>
             </tr>
             </thead>
+
             <tbody>
             @forelse($categories as $category)
                 <tr class="odd:bg-gray-100">
@@ -32,25 +45,26 @@
                         <x-primary-link-button
                             href="{{ route('admin.categories.show', $category) }}"
                             class="hover:bg-sky-500">
-                            <i class="fa-solid fa-eye pe-2"></i>
+                            <i class="fa-solid fa-eye pr-2"></i>
                             <span class="sr-only">Show</span>
                         </x-primary-link-button>
 
                         <x-primary-link-button
                             href="{{ route('admin.categories.edit', $category) }}"
                             class="hover:bg-green-500">
-                            <i class="fa-solid fa-edit pe-2"></i>
+                            <i class="fa-solid fa-edit pr-2"></i>
                             <span class="sr-only">Edit</span>
                         </x-primary-link-button>
 
                         <x-secondary-link-button
                             href="{{ route('admin.categories.delete', $category) }}"
-                            class="bg-red-100 hover:bg-red-500
-                                   text-gray-500! hover:text-white!">
+                            class="hover:bg-red-500!
+                                 text-gray-500! hover:text-white!">
                             <i class="fa-solid fa-times pr-2"></i>
                             <span class="sr-only">Delete</span>
                         </x-secondary-link-button>
                     </td>
+
                 </tr>
             @empty
                 <tr>
@@ -58,6 +72,7 @@
                 </tr>
             @endforelse
             </tbody>
+
             <tfoot>
             <tr>
                 <td class="p-4" colspan="3">
@@ -65,9 +80,9 @@
                         {{ $categories->links() }}
                     @else
                         @if($categories->total() > 0)
-                            All categories shown
+                            All Categories shown
                         @else
-                            No categories
+                            No Categories
                         @endif
                     @endif
                 </td>

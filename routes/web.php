@@ -16,6 +16,10 @@ Route::get('categories',[\App\Http\Controllers\CategoryController::class, 'index
     ->name('categories.index');
 Route::get('categories/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])
     ->name('categories.show');
+Route::get('categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])
+    ->name('categories.create');
+Route::post('categories/store', [\App\Http\Controllers\CategoryController::class, 'store'])
+    ->name('categories.store');
 
 
 

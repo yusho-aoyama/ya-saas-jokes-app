@@ -35,7 +35,23 @@ class CategoryManagementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validated = $request->validate([
+            'title'=>[
+                'required',
+                'min:3',
+                'max:64',
+                Rule::unique('categories', 'title')
+            ],
+            'description' => [
+                'nullable',
+                'max:255',
+            ]
+        ]);
+
+        // Create a new category
+        Category::create($validated);
+        return to_route('admin.categories.index');
     }
 
     /**
@@ -77,7 +93,7 @@ class CategoryManagementController extends Controller
                 ],
             'description' => [
                 'nullable',
-                'max:265',
+                'max:255',
             ]
         ]);
 
@@ -99,8 +115,13 @@ class CategoryManagementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        // Save the current category
+        $oldCategory = $category;
+
+        // Delete
+        $category->delete();
+        return to_route('admin.categories.index');
     }
 }

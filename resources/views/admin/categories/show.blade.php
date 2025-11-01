@@ -7,23 +7,39 @@
 
     <section class="py-12 mx-12 space-y-4">
 
-        <header>
+        <header class="flex justify-between">
             <h3 class="text-2xl font-bold text-zinc-700">
-                {{__('Categories')}}: {{ __('Detail') }}
+                {{__('Categories')}}: <i class="fa-solid fa-sticky-note"></i> {{ __('Detail') }}
             </h3>
+
+            <x-primary-link-button
+                href="{{ route('admin.categories.create') }}">
+                <i class="fa-solid fa-plus"></i>
+                New Category
+            </x-primary-link-button>
+
         </header>
 
-        <dl class="flex flex-wrap gap-4">
-            <dt class="w-1/6">Name</dt>
-            <dd class="grow">{{ $category->title }}</dd>
-            <dt class="w-1/6">Description</dt>
-            <dd class="grow">{{ $category->description }}</dd>
 
+        <dl class="grid grid-cols-6 m-4 w-full shadow mb-6">
+            <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
+                Name
+            </dt>
+            <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
+                {{ $category->title }}
+            </dd>
 
+            <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
+                Description
+            </dt>
+            <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
+                {{ $category->description }}
+            </dd>
         </dl>
-        <footer>
+
+        <footer class="flex gap-4">
             <x-primary-link-button
-                href="{{ route('admin.categories.show', $category) }}"
+                href="{{ route('admin.categories.index') }}"
                 class="hover:bg-sky-500 gap-4">
                 <i class="fa-solid fa-list"></i>
                 <span>All Categories</span>
@@ -31,15 +47,16 @@
 
             <x-primary-link-button
                 href="{{ route('admin.categories.edit', $category) }}"
-                class="hover:bg-green-500">
-                <i class="fa-solid fa-edit"></i>
+                class="hover:bg-green-500 gap-4">
+                <i class="fa-solid fa-edit "></i>
                 <span>Edit</span>
             </x-primary-link-button>
 
             <x-secondary-link-button
                 href="{{ route('admin.categories.delete', $category) }}"
-                class="bg-red-100 hover:bg-red-500
-                                   text-gray-500! hover:text-white!">
+                class="hover:bg-red-500!
+                        text-gray-500! hover:text-white!
+                         gap-4">
                 <i class="fa-solid fa-times"></i>
                 <span>Delete</span>
             </x-secondary-link-button>

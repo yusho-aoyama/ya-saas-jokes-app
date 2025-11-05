@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryManagementController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticPageController;
@@ -37,6 +38,14 @@ Route::middleware(['auth', 'verified'])
         Route::get('/', [AdminController::class, 'index'])
             ->name('index');
 
+        /* Add a new route to this "admin" routing for the users */
+        Route::resource('users',
+            UserManagementController::class)
+            ->middleware(['auth',]);
+        /* Add a new route of user/delete page */
+        Route::get('users/{user}/delete', [UserManagementController::class, 'delete'])
+            ->name('users.delete');
+
         Route::get('users', [AdminController::class, 'users'])->name('users');
 
         Route::get('categories/{category}/delete', [CategoryManagementController::class, 'delete'])
@@ -63,5 +72,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])
         ->name('profile.destroy');
 });
+
 
 require __DIR__.'/auth.php';

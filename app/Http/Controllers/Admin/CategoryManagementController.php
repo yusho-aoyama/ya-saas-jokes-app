@@ -35,30 +35,46 @@ class CategoryManagementController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $validated = $request->validate([
+                'title'=>[
+                    'required',
+                    'min:3',
+                    'max:64',
+                    Rule::unique('categories', 'title')
+                ],
+                'description' => [
+                    'nullable',
+                    'max:255',
+                ]
+            ]);
 
-        $validated = $request->validate([
-            'title'=>[
-                'required',
-                'min:3',
-                'max:64',
-                Rule::unique('categories', 'title')
-            ],
-            'description' => [
-                'nullable',
-                'max:255',
-            ]
-        ]);
+            // Create a new category
+            $category = Category::create($validated);
 
-        // Create a new category
-        $category = Category::create($validated);
+            flash()->success("Category '{$category->title}' created successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Category Added");
 
-        flash()->success("Category '{$category->title}' created successfully!",
-            [
-                'position' => 'top-center',
-                'timeout' => 5000,
-            ],
-            "Category Added");
-        return to_route('admin.categories.index');
+            return to_route('admin.categories.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Please fix the errors in the form.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Category Creation Failed'
+            );
+
+            // return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
+
     }
 
     /**
@@ -89,23 +105,47 @@ class CategoryManagementController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $oldCategory = $category;
+        try {
+            $oldCategory = $category;
 
-        $validated = $request->validate([
-            'title'=>[
-                'required',
-                'min:3',
-                'max:64',
-                Rule::unique('categories', 'title')->ignore($category)
+            $validated = $request->validate([
+                'title'=>[
+                    'required',
+                    'min:3',
+                    'max:64',
+                    Rule::unique('categories', 'title')->ignore($category)
                 ],
-            'description' => [
-                'nullable',
-                'max:255',
-            ]
-        ]);
+                'description' => [
+                    'nullable',
+                    'max:255',
+                ]
+            ]);
 
-        $category->update($validated);
-        return to_route('admin.categories.index');
+            $category->update($validated);
+
+            flash()->success("Category '{$category->title}' updated successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Category Updated");
+
+            return to_route('admin.categories.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Please fix the errors in the form.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Category Update Failed'
+            );
+
+            // Return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
+
     }
 
     /**
@@ -124,11 +164,35 @@ class CategoryManagementController extends Controller
      */
     public function destroy(Category $category)
     {
-        // Save the current category
-        $oldCategory = $category;
+        try {
+            // Save the current category
+            $oldCategory = $category;
 
-        // Delete
-        $category->delete();
-        return to_route('admin.categories.index');
+            // Delete
+            $category->delete();
+
+            flash()->success("Category '{$category->title}' deleted successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Category Deleted");
+
+            return to_route('admin.categories.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Failed to delete category.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Category Deletion Failed'
+            );
+
+            // Return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
+
     }
 }

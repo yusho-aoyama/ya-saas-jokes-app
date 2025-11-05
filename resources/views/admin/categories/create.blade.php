@@ -38,7 +38,7 @@
                 <x-input-error :messages="$errors->get('title')" class="mt-2"/>
 
                 <x-input-label for="Description">Description</x-input-label>
-                <x-text-input name="description"
+                <x-textarea name="description"
                               id="Description"
                               placeholder="Category description"
                               value="{{ old('description')}}"

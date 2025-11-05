@@ -58,6 +58,7 @@
                     <span>Show</span>
                 </x-primary-link-button>
 
+                {{-- [type="submit"] -> send --}}
                 <x-secondary-button
                     type="submit"
                     class="hover:bg-red-500!

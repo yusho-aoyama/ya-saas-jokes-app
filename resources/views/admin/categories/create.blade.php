@@ -40,10 +40,9 @@
                 <x-input-label for="Description">Description</x-input-label>
                 <x-text-input name="description"
                               id="Description"
-                              type="text"
                               placeholder="Category description"
                               value="{{ old('description')}}"
-                              required autofocus
+                              autofocus
                               autocomplete="description"
                 />
                 <x-input-error :messages="$errors->get('description')" class="mt-2"/>

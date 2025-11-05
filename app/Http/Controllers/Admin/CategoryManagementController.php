@@ -50,7 +50,14 @@ class CategoryManagementController extends Controller
         ]);
 
         // Create a new category
-        Category::create($validated);
+        $category = Category::create($validated);
+
+        flash()->success("Category '{$category->title}' created successfully!",
+            [
+                'position' => 'top-center',
+                'timeout' => 5000,
+            ],
+            "Category Added");
         return to_route('admin.categories.index');
     }
 

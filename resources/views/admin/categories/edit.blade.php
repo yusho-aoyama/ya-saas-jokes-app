@@ -39,13 +39,13 @@
                 <x-input-error :messages="$errors->get('title')" class="mt-2"/>
 
                 <x-input-label for="Description">Description</x-input-label>
-                <x-text-input name="description"
+                <x-textarea name="description"
                               id="Description"
-                              type="text"
                               placeholder="Category description"
-                              value="{{ old('description') ?? $category->description }}"
-                              required autofocus
-                              autocomplete="description"
+                            {{-- value="{{ old('description') ?? $category->description }}"--}}
+                              autofocus
+                              :message="old('description') ?? $category->description"
+                            autocomplete="description"
                 />
                 <x-input-error :messages="$errors->get('description')" class="mt-2"/>
 

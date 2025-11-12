@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryManagementController;
 use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\JokeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaticPageController;
@@ -22,6 +23,15 @@ Route::get('categories/create', [\App\Http\Controllers\CategoryController::class
 Route::post('categories/store', [\App\Http\Controllers\CategoryController::class, 'store'])
     ->name('categories.store');
 
+/* Guest/Client Joke Routes */
+Route::get('jokes', [\App\Http\Controllers\JokeController::class, 'index'])
+    ->name('jokes.index');
+Route::get('jokes/{joke}', [\App\Http\Controllers\JokeController::class, 'show'])
+    ->name('jokes.show');
+Route::get('jokes/create', [\App\Http\Controllers\JokeController::class, 'create'])
+    ->name('jokes.create');
+Route::post('jokes/store', [\App\Http\Controllers\JokeController::class, 'store'])
+    ->name('jokes.store');
 
 
 
@@ -48,8 +58,13 @@ Route::middleware(['auth', 'verified'])
 
         Route::get('users', [AdminController::class, 'users'])->name('users');
 
+        /* Add a new route of category/delete page */
         Route::get('categories/{category}/delete', [CategoryManagementController::class, 'delete'])
             ->name('categories.delete');
+
+        /* Add a new route of joke/delete page */
+        Route::get('jokes/{joke}/delete', [JokeController::class, 'delete'])
+            ->name('jokes.delete');
         /**
          *  create the routes:
          *          admin.categories.index

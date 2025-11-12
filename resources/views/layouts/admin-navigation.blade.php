@@ -86,12 +86,12 @@
 
         </details>
 
-        <x-side-nav-link :href="route('home')" :active="request()->routeIs('home')">
+        <x-side-nav-link :href="route('jokes.index')" :active="request()->routeIs('jokes.*')">
             <i class="fa-solid fa-laugh group-hover:text-zinc-500"></i>
             {{ __('Jokes') }}
         </x-side-nav-link>
 
-        <x-side-nav-link :href="route('home')" :active="request()->routeIs('home')">
+        <x-side-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
             <i class="fa-solid fa-cat group-hover:text-zinc-500"></i>
             {{ __('Categories') }}
         </x-side-nav-link>

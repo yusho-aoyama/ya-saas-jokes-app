@@ -41,7 +41,7 @@
                 <x-input-label for="Description">Description</x-input-label>
                 <x-textarea name="description"
                               id="Description"
-                              placeholder="Category description"
+                                placeholder="Category description"
                             {{-- value="{{ old('description') ?? $category->description }}"--}}
                               autofocus
                               :message="old('description') ?? $category->description"

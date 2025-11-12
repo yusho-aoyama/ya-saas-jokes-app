@@ -25,8 +25,8 @@ return new class extends Migration
             // * joke_id must exist in the jokes table
             // If the category or joke is deleted, the values related to them in the pivot table will be deleted automatically because of "onDelete('cascade')"
 
-            // To allow pairs(category_id, joke_id) not to be the same pair as others = the pair will be unique
-            $table->primary(['category_id' , 'joke_id']);
+            // The pair will be unique
+            $table->unique(['category_id', 'joke_id']);
 
             // https://laracasts.com/discuss/channels/eloquent/how-to-define-compond-key-uniqueness-in-migration
 

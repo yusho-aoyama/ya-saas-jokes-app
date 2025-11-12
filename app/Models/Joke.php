@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Casts\AsStringable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class joke extends Model
+class Joke extends Model
 {
     /** @use HasFactory<\Database\Factories\JokeFactory> */
     use HasFactory;
@@ -58,5 +58,9 @@ class joke extends Model
         return ($this->content->words($words));
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 
 }

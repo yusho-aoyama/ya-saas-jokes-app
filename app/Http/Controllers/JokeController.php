@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\joke;
-use App\Http\Requests\StorejokeRequest;
-use App\Http\Requests\UpdatejokeRequest;
+use App\Models\Joke;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class JokeController extends Controller
 {
@@ -42,7 +42,7 @@ class JokeController extends Controller
      * @param Joke $joke
      * @return View
      */
-    public function show(joke $joke):View
+    public function show(Joke $joke):View
     {
         return view('jokes.show')
             ->with('joke', $joke);
@@ -54,7 +54,7 @@ class JokeController extends Controller
      * @param Joke $joke
      * @return View
      */
-    public function edit(joke $joke)
+    public function edit(Joke $joke)
     {
         return view('jokes.edit')
             ->with('joke', $joke);
@@ -63,7 +63,7 @@ class JokeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, joke $joke)
+    public function update(Request $request, Joke $joke)
     {
         $oldJoke = $joke;
 
@@ -88,7 +88,7 @@ class JokeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(joke $joke)
+    public function destroy(Joke $joke)
     {
         //
     }
@@ -99,7 +99,7 @@ class JokeController extends Controller
      * @param Joke $joke
      * @return View
      */
-    public function delete(joke $joke):View
+    public function delete(Joke $joke):View
     {
         return view('jokes.delete')
             ->with('joke', $joke);

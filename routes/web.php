@@ -23,21 +23,28 @@ Route::get('categories/create', [\App\Http\Controllers\CategoryController::class
 Route::post('categories/store', [\App\Http\Controllers\CategoryController::class, 'store'])
     ->name('categories.store');
 
-/* Guest/Client Joke Routes */
-Route::get('jokes', [\App\Http\Controllers\JokeController::class, 'index'])
-    ->name('jokes.index');
-Route::get('jokes/{joke}', [\App\Http\Controllers\JokeController::class, 'show'])
-    ->name('jokes.show');
-Route::get('jokes/create', [\App\Http\Controllers\JokeController::class, 'create'])
-    ->name('jokes.create');
-Route::post('jokes/store', [\App\Http\Controllers\JokeController::class, 'store'])
-    ->name('jokes.store');
+/**
+ *  create the routes:
+ *          admin.jokes.index
+ *          admin.jokes.show
+ *          admin.jokes.add
+ *          admin.jokes.create
+ *          admin.jokes.edit
+ *          admin.jokes.update
+ *          admin.jokes.destroy
+ */
+Route::get('jokes/{joke}/delete', [JokeController::class, 'delete'])
+            ->name('jokes.delete');
+Route::resource('jokes', JokeController::class);
+
 
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])
         ->name('dashboard');
+
+    /** Add Authenticated User Routes here */
 });
 
 /* Staff amd Admin Routes */
@@ -63,8 +70,8 @@ Route::middleware(['auth', 'verified'])
             ->name('categories.delete');
 
         /* Add a new route of joke/delete page */
-        Route::get('jokes/{joke}/delete', [JokeController::class, 'delete'])
-            ->name('jokes.delete');
+//        Route::get('jokes/{joke}/delete', [JokeController::class, 'delete'])
+//            ->name('jokes.delete');
         /**
          *  create the routes:
          *          admin.categories.index

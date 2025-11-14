@@ -31,9 +31,47 @@ class JokeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorejokeRequest $request)
+    public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'title'=>[
+                    'required',
+                    'min:5',
+                    'max:128',
+                    Rule::unique('jokes', 'title')
+                ],
+                'content'=>[
+                    'nullable',
+                    'max:255',
+                ]
+            ]);
+
+            // Create a new category
+            $joke = Joke::create($validated);
+
+            flash()->success("Joke '{$joke->title}' created successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Joke Added");
+
+            return to_route('jokes.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Please fix the errors in the form.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Joke Creation Failed'
+            );
+
+            // return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
     }
 
     /**
@@ -65,24 +103,46 @@ class JokeController extends Controller
      */
     public function update(Request $request, Joke $joke)
     {
-        $oldJoke = $joke;
+        try {
+            $oldJoke = $joke;
 
-        $validated = $request->validate([
-            'title'=>[
-                'required',
-                'min:5',
-                'max:128',
-                Rule::unique('jokes', 'title')->ignore($joke)
-            ],
-            'content'=>[
-                'nullable',
-                'max:255',
-            ]
-        ]);
+            $validated = $request->validate([
+                'title'=>[
+                    'required',
+                    'min:5',
+                    'max:128',
+                    Rule::unique('jokes', 'title')->ignore($joke)
+                ],
+                'content'=>[
+                    'nullable',
+                    'max:255',
+                ]
+            ]);
 
-        $joke->update($validated);
+            $joke->update($validated);
 
-        return to_route('jokes.index');
+            flash()->success("Joke '{$joke->title}' updated successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Joke Updated");
+
+            return to_route('jokes.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Please fix the errors in the form.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Joke Update Failed'
+            );
+
+            // Return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
     }
 
     /**
@@ -90,7 +150,35 @@ class JokeController extends Controller
      */
     public function destroy(Joke $joke)
     {
-        //
+        try {
+            // Save the current joke
+            $oldJoke = $joke;
+
+            // Delete
+            $joke->delete();
+
+            flash()->success("Joke '{$joke->title}' deleted successfully!",
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                "Joke Deleted");
+
+            return to_route('jokes.index');
+        } catch (ValidationException $e) {
+
+            flash()->error(
+                'Failed to delete joke.',
+                [
+                    'position' => 'top-center',
+                    'timeout' => 5000,
+                ],
+                'Joke Deletion Failed'
+            );
+
+            // Return the validation error to the form
+            return back()->withErrors($e->validator)->withInput();
+        }
     }
 
     /**

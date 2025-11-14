@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="py-12 mx-12 space-y-4">
+    <section class="p-12 mx-12 space-y-4">
         <header class="flex justify-between">
             <h3 class="text-2xl font-bold text-zinc-700">
                 {{__('Jokes')}}

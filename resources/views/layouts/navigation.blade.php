@@ -12,9 +12,18 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('home')" :achieve="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+
                     @auth()
-                        <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                            {{ __('Home') }}
+                        <x-nav-link :href="route('jokes.index')"
+                                    :active="request()->routeIs('jokes.*')">
+                            {{ __('Jokes') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.categories.index')"
+                                    :active="request()->routeIs('admin.categories.*')">
+                            {{ __('Categories') }}
                         </x-nav-link>
 
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -26,11 +35,30 @@
                         </x-nav-link>
                     @endauth
                 </div>
+            </div>
 
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @auth
+                @else
+                    <a
+                        href="{{ route('login') }}"
+                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
+                    >
+                        Log in
+                    </a>
 
+                    @if (Route::has('register'))
+                        <a
+                            href="{{ route('register') }}"
+                            class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
+                            Register
+                        </a>
+                    @endif
+                @endauth
             </div>
 
             <!-- Settings Dropdown -->
+            @auth()
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -67,6 +95,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -87,13 +116,39 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs
+            ('home')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
+
+            @auth()
+                <x-responsive-nav-link :href="route('jokes.index')"
+                                       :active="request()->routeIs('jokes.*')">
+                    Jokes
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.categories.index')"
+                            :active="request()->routeIs('admin.categories.*')">
+                    Categories
+                </x-responsive-nav-link>
+            @endauth
+        </div>
+
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            @auth()
+                <x-responsive-nav-link :href="route('dashboard')"
+                                       :active="request()->routeIs('dashboard')">
+                    Dashboard
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.index')"
+                                       :active="request()->routeIs('admin.*')">
+                    Admin
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
+            @auth()
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
@@ -115,6 +170,21 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+            @else
+                <x-responsive-nav-link
+                    href="{{ route('login') }}"
+                    :active="request()->routeIs('login')" >
+                    Log in
+                </x-responsive-nav-link>
+
+                @if (Route::has('register'))
+                    <x-responsive-nav-link
+                        href="{{ route('register') }}"
+                        :active="request()->routeIs('register')" >
+                        Register
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
     </div>
 </nav>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\View\View;
+use App\Models\Joke;
 
 class StaticPageController extends Controller
 {
@@ -11,7 +12,16 @@ class StaticPageController extends Controller
      */
     public function home(): View
     {
-        return view('static.welcome');
+//        $jokes = Joke::paginate();
+//
+//        return view('static.welcome')
+//            ->with('jokes', $jokes);
+
+        // Get a random joke
+        $joke = Joke::inRandomOrder()->first();
+
+        return view('static.welcome')
+            ->with('joke', $joke);
     }
 
     public function about(): View

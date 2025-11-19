@@ -6,6 +6,9 @@ use App\Models\Joke;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+// Adding Gates
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\Builder;
 
 class JokeController extends Controller
 {
@@ -14,7 +17,17 @@ class JokeController extends Controller
      */
     public function index()
     {
-        $jokes = Joke::paginate();
+        $jokes = Joke::with('userVotes')
+            ->withCount([
+                'votes as likesCount'
+                => fn (Builder $query)
+                => $query->where('vote', '>', 0)], 'vote')
+            ->withCount([
+                'votes as dislikesCount'
+                => fn (Builder $query)
+                => $query->where('vote', '<', 0)], 'vote')
+            ->latest()
+            ->paginate();
 
         return view('jokes.index')
             ->with('jokes', $jokes);

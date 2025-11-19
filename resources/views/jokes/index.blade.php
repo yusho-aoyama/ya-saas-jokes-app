@@ -25,6 +25,7 @@
                 <th class="p-2">Title</th>
                 <th class="p-2">Content</th>
 {{--                <th class="p-2">Author</th>--}}
+                <th class="p-2">Evaluation</th>
                 <th class="p-2">Actions</th>
             </tr>
             </thead>
@@ -32,9 +33,13 @@
             <tbody>
             @forelse($jokes as $joke)
                 <tr class="odd:bg-gray-100">
-                    <td class="p-2">{{ $joke->title }}</td>
+                    <td class="p-2 font-bold">{{ $joke->title }}</td>
                     <td class="p-2">{!! Str::of($joke->content??"")->stripTags() !!}</td>
 {{--                    <td class="p-2">{{ $joke->user }}</td>--}}
+
+                    {{-- Like/Dislike --}}
+                    <td class="p-2"><livewire:like-dislike :joke="$joke" /></td>
+
 
                     <td class="p-2 flex gap-4">
                         <x-primary-link-button

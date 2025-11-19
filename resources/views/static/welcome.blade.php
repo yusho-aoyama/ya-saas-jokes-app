@@ -34,6 +34,13 @@
                                 </span>
                             @endforeach
                         </footer>
+
+                        {{-- If the user is logged in, the like/dislike button will be displayd --}}
+                        @auth
+                            <div class="mt-4">
+                                @livewire('like-dislike', ['joke' => $joke])
+                            </div>
+                        @endauth
                     </article>
 
                     {{-- Another Joke button--}}

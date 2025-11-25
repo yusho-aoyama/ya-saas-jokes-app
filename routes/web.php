@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('users/{user}/delete', [UserManagementController::class, 'delete'])
             ->name('users.delete');
 
+        // This will be removed when administration of users is created
         Route::get('users', [AdminController::class, 'users'])->name('users');
 
         /* Add a new route of category/delete page */

@@ -61,7 +61,8 @@
         "laravel/telescope": "^5.10",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
-        "php-flasher/flasher-laravel": "*"
+        "php-flasher/flasher-laravel": "*",
+        "spatie/laravel-permission": "^6.23"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",

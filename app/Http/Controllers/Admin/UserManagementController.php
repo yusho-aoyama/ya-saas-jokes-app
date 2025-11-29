@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserManagementController extends Controller
 {
@@ -31,7 +32,11 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        // Get All roles from database
+        $roles = Role::all();
+
+        return view('admin.users.create')
+            ->with('roles', $roles);
     }
 
     /**
@@ -58,6 +63,9 @@ class UserManagementController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
+            // Send a email when registered
+            $user->sendEmailVerificationNotification();
+
             flash()->success("User '{$user->name}' created successfully!",
                 [
                     'position' => 'top-center',
@@ -83,9 +91,15 @@ class UserManagementController extends Controller
      */
     public function show(User $user)
     {
-        //
+        // Get roles data
+        // getRoleNames() returns a Collection of role names that the user has
+        // ['super-user', 'admin', 'staff', 'client']
+        $roles = $user->getRoleNames();
+
         return view('admin.users.show')
-            ->with('user', $user);
+            ->with('user', $user)
+            -> with('roles', $roles);
+
     }
 
     /**

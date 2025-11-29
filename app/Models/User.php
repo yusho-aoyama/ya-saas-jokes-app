@@ -11,9 +11,11 @@ use Illuminate\Support\Str;
 use Database\Factories\UserFactory;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
+// This is a use line to implement email varification
+// https://laravel.com/docs/12.x/verification
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     //  To allow for a user to have individual permissions beyond

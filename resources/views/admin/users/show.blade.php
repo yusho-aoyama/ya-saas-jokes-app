@@ -52,16 +52,18 @@
                     <i class="fa-solid fa-user-friends"></i>
                 </dt>
                 <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $user->role ?? __("No Role") }}
+                    {{-- Need to convert array data to string --}}
+                    {{-- join() converts a Collection or array of role names into a  string --}}
+                    {{ $roles->isNotEmpty() ? $roles->join(', ') : __("No Role") }}
                 </dd>
                 {{-- Status --}}
-                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
-                    {{__("Status")}}:
-                    <i class="fa-solid fa-user-lock"></i>
-                </dt>
-                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $user->status ?? __("No Status") }}
-                </dd>
+{{--                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">--}}
+{{--                    {{__("Status")}}:--}}
+{{--                    <i class="fa-solid fa-user-lock"></i>--}}
+{{--                </dt>--}}
+{{--                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">--}}
+{{--                    {{ $user->status ?? __("No Status") }}--}}
+{{--                </dd>--}}
                 {{-- Added (Created at) and Updated (Updated at) Dates --}}
                 <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
                     {{ __("Added") }}

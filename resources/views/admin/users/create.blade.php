@@ -56,24 +56,28 @@
                             {{__("Role")}}
                         </x-input-label>
                         <select id="Role" name="role">
-                            <option>No Roles Provided</option>
+                            <option value="">-- Select Role --</option>
+
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
                         </select>
                         <x-input-error
                             :messages="$errors->get('role')"
                             class="mt-2"/>
 
 
-                        <x-input-label for="Status">
-                            {{__("Status")}}
-                        </x-input-label>
-                        <select
-                            id="Status"
-                            name="status">
-                            <option>No Status Provided</option>
-                        </select>
-                        <x-input-error
-                            :messages="$errors->get('status')"
-                            class="mt-2"/>
+{{--                        <x-input-label for="Status">--}}
+{{--                            {{__("Status")}}--}}
+{{--                        </x-input-label>--}}
+{{--                        <select--}}
+{{--                            id="Status"--}}
+{{--                            name="status">--}}
+{{--                            <option>No Status Provided</option>--}}
+{{--                        </select>--}}
+{{--                        <x-input-error--}}
+{{--                            :messages="$errors->get('status')"--}}
+{{--                            class="mt-2"/>--}}
 
 
                         <x-input-label for="Password">

@@ -15,8 +15,19 @@ class JokeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
+        $validated = $request->validate([
+            'search' => [
+                'nullable',
+                'max:64',
+                'string'
+            ],
+        ]);
+
+        $search = $validated['search'] ?? '';
+
         $jokes = Joke::with('userVotes')
             ->withCount([
                 'votes as likesCount'
@@ -26,11 +37,19 @@ class JokeController extends Controller
                 'votes as dislikesCount'
                 => fn (Builder $query)
                 => $query->where('vote', '<', 0)], 'vote')
-            ->latest()
-            ->paginate();
+            ->latest();
+
+        // Comment out if the search function is required
+//        if ($search) {
+//            $jokes->where('title', 'like', "%{$search}%");
+//        }
+
+        $jokes = $jokes->paginate();
+
 
         return view('jokes.index')
-            ->with('jokes', $jokes);
+            ->with('jokes', $jokes)
+            ->with('search', $search);
     }
 
     /**

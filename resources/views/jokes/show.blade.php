@@ -12,9 +12,6 @@
                     New Joke
                 </x-primary-link-button>
 
-                <div class="text-sm capitalize">
-                    Add Search Form Here
-                </div>
 
             </div>
         </header>
@@ -43,22 +40,26 @@
                 <span>All Jokes</span>
             </x-primary-link-button>
 
-            <x-primary-link-button
-                href="{{ route('jokes.edit', $joke) }}"
-                class="hover:bg-green-500 gap-4">
-                <i class="fa-solid fa-edit "></i>
-                <span>Edit</span>
-            </x-primary-link-button>
+            @if (auth()->check() && (auth()->id() === $joke->user_id || auth()
+                        ->user()->can('post-any-edit')))
+                <x-primary-link-button
+                    href="{{ route('jokes.edit', $joke) }}"
+                    class="hover:bg-green-500 gap-4">
+                    <i class="fa-solid fa-edit "></i>
+                    <span>Edit</span>
+                </x-primary-link-button>
+            @endif
 
-            <x-secondary-link-button
-                href="{{ route('jokes.delete', $joke) }}"
-                class="hover:bg-red-500!
-                        text-gray-500! hover:text-white!
-                         gap-4">
-                <i class="fa-solid fa-times"></i>
-                <span>Delete</span>
-            </x-secondary-link-button>
-
+            @if (auth()->check() && (auth()->id() === $joke->user_id || auth()->user()->can('post-any-delete')))
+                <x-secondary-link-button
+                    href="{{ route('jokes.delete', $joke) }}"
+                    class="hover:bg-red-500!
+                            text-gray-500! hover:text-white!
+                             gap-4">
+                    <i class="fa-solid fa-times"></i>
+                    <span>Delete</span>
+                </x-secondary-link-button>
+            @endif
         </footer>
     </section>
 

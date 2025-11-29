@@ -82,7 +82,7 @@
 
             <footer class="flex gap-4">
                 <x-primary-link-button
-                    href="{{ route('admin.users') }}"
+                    href="{{ route('admin.users.index') }}"
                     class="hover:bg-sky-500 gap-4">
                     <i class="fa-solid fa-list"></i>
                     <span>All Users</span>

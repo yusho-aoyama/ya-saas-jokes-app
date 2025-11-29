@@ -70,4 +70,5 @@ class User extends Authenticatable
             ->reduce(fn($carry, $part) => $carry.$part[0]);
     }
 
+
 }

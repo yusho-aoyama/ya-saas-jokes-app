@@ -12,9 +12,6 @@
                     New Joke
                 </x-primary-link-button>
 
-                <div class="text-sm capitalize">
-                    Add Search Form Here
-                </div>
 
             </div>
         </header>

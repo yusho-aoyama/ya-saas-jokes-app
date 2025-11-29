@@ -21,8 +21,8 @@
                                     :active="request()->routeIs('jokes.*')">
                             {{ __('Jokes') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin.categories.index')"
-                                    :active="request()->routeIs('admin.categories.*')">
+                        <x-nav-link :href="route('categories.index')"
+                                    :active="request()->routeIs('categories.*')">
                             {{ __('Categories') }}
                         </x-nav-link>
 
@@ -126,8 +126,8 @@
                                        :active="request()->routeIs('jokes.*')">
                     Jokes
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('admin.categories.index')"
-                            :active="request()->routeIs('admin.categories.*')">
+                <x-responsive-nav-link :href="route('categories.index')"
+                            :active="request()->routeIs('categories.*')">
                     Categories
                 </x-responsive-nav-link>
             @endauth

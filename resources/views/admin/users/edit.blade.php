@@ -133,7 +133,7 @@
 
                         <x-secondary-link-button
                             class="bg-neutral-700 hover:bg-yellow-700"
-                            href="{{ route('admin.users') }}">
+                            href="{{ route('admin.users.index') }}">
                             Cancel
                         </x-secondary-link-button>
 

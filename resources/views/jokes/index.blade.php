@@ -12,9 +12,11 @@
                     New Joke
                 </x-primary-link-button>
 
-                <div class="text-sm capitalize">
-                    Add Search Form Here
-                </div>
+{{--                 Comment out if the search function is required--}}
+{{--                <form action="{{ route('jokes.index') }}" method="GET">--}}
+{{--                    <x-text-input id="Search" name="search" value="{{ old('search') ?? $search }}"></x-text-input>--}}
+{{--                    <x-primary-button type="submit">Search</x-primary-button>--}}
+{{--                </form>--}}
 
             </div>
         </header>
@@ -49,20 +51,25 @@
                             <span class="sr-only">Show</span>
                         </x-primary-link-button>
 
+                        @if (auth()->check() && (auth()->id() === $joke->user_id || auth()
+                        ->user()->can('post-any-edit')))
                         <x-primary-link-button
                             href="{{ route('jokes.edit', $joke) }}"
                             class="hover:bg-green-500">
                             <i class="fa-solid fa-edit pr-2"></i>
                             <span class="sr-only">Edit</span>
                         </x-primary-link-button>
+                        @endif
 
-                        <x-secondary-link-button
-                            href="{{ route('jokes.delete', $joke) }}"
-                            class="hover:bg-red-500!
-                                 text-gray-500! hover:text-white!">
-                            <i class="fa-solid fa-times pr-2"></i>
-                            <span class="sr-only">Delete</span>
-                        </x-secondary-link-button>
+                        @if (auth()->check() && (auth()->id() === $joke->user_id || auth()->user()->can('post-any-delete')))
+                            <x-secondary-link-button
+                                href="{{ route('jokes.delete', $joke) }}"
+                                class="hover:bg-red-500!
+                                     text-gray-500! hover:text-white!">
+                                <i class="fa-solid fa-times pr-2"></i>
+                                <span class="sr-only">Delete</span>
+                            </x-secondary-link-button>
+                        @endif
                     </td>
 
                 </tr>

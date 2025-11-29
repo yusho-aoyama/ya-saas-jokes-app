@@ -19,8 +19,8 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        // To retrieve all users and display them on the page
-        $users = User::all();
+        // To retrieve 10 users and display them on the page
+        $users = User::paginate(10);
 
         return view('admin.users.index')
                 ->with('users', $users);
@@ -64,7 +64,7 @@ class UserManagementController extends Controller
                     'timeout' => 5000,
                 ],
                 "User Added");
-            return redirect(route('admin.users'));
+            return redirect(route('admin.users.index'));
         } catch (\Illuminate\Validation\ValidationException $e) {
 
             flash()->error(
@@ -158,7 +158,7 @@ class UserManagementController extends Controller
                 "User Updated");
 
             // Redirect back to the user index view
-            return redirect(route('admin.users'));
+            return redirect(route('admin.users.index'));
 
         } catch (\Illuminate\Validation\ValidationException $e) {
 
@@ -195,7 +195,7 @@ class UserManagementController extends Controller
                     'timeout' => 5000,
                 ],
                 "User Deleted");
-            return redirect(route('admin.users'));
+            return redirect(route('admin.users.index'));
         } catch (ValidationException $e) {
 
             flash()->error(

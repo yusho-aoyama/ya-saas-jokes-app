@@ -1,0 +1,70 @@
+{{-- This file is a view part of role creation and editing--}}
+
+<div class="space-y-4 bg-gray-50 p-4 rounded">
+    <!-- Role Name -->
+    <div>
+        <label class="block font-bold mb-1">Role Name</label>
+        {{-- A read-only input field cannot be modified (however, a user can tab to it, highlight it, and copy the text from it) --}}
+        {{-- https://www.w3schools.com/tags/att_input_readonly.asp --}}
+        <input type="text" wire:model="roleName" class="border p-2 w-full" @if($roleId) readonly @endif >
+
+        @error('roleName')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <!-- Search Filter -->
+    <div>
+        <input type="text" wire:model="search"
+               placeholder="Search permissions..."
+               class="border p-2 w-full">
+    </div>
+
+    <div class="flex space-x-8">
+        <!-- Available Permissions -->
+        <div class="w-1/2 border p-4">
+            <h3 class="font-bold mb-2">Available Permissions</h3>
+            <ul class="grid grid-cols-3 gap-2">
+                @foreach($filteredPermissions as $permission)
+                    <li class="cursor-pointer border border-gray-300 rounded
+                                hover:bg-gray-200 bg-gray-50 p-1 "
+                        wire:click="selectPermission('{{ $permission }}')"
+                    >
+                        {{ Str::title($permission) }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <!-- Selected Permissions -->
+        <div class="w-1/2 border p-4">
+            <h3 class="font-bold mb-2">Selected Permissions</h3>
+            <ul class="grid grid-cols-3 gap-2">
+                @foreach($selectedPermissions as $key => $permission)
+                    <li class="cursor-pointer border border-gray-300 rounded
+                             bg-green-100 hover:bg-gray-200 p-1"
+                        wire:click="removePermission('{{ $permission }}')"
+                    >
+                        {{ Str::title( $permission ) }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    <!-- Save Button -->
+    <div>
+
+        <x-primary-link-button wire:click="saveRole">
+            <i class="fa-solid fa-save pr-4"></i>
+            {{ $roleId ? __('Update Changes') : __('Save') }}
+        </x-primary-link-button>
+
+        <x-secondary-link-button href="{{route('admin.roles.index')}}">
+            <i class="fa-solid fa-cancel pr-4"></i>
+            {{ __('Cancel') }}
+        </x-secondary-link-button>
+
+    </div>
+
+</div>

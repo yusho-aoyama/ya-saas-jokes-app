@@ -70,7 +70,8 @@
 
             <section class="mt-2 space-y-1">
 
-                <x-side-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')" class="px-12 py-2">
+                <x-side-nav-link :href="route('admin.users.index')" :active="request()->routeIs
+                ('admin.users.*')" class="px-12 py-2">
                     {{ __('Accounts') }}
                 </x-side-nav-link>
 
@@ -114,11 +115,15 @@
             </summary>
 
             <section class="mt-2 space-y-1">
-                <x-side-nav-link :href="route('home')" :active="request()->routeIs('home')" class="px-12 py-2">
+                <x-side-nav-link :href="route('admin.roles.index')"
+                                 :active="request()->routeIs('admin.roles.*')"
+                                 class="px-12 py-2">
                     {{ __('Roles') }}
                 </x-side-nav-link>
 
-                <x-side-nav-link :href="route('home')" :active="request()->routeIs('home')" class="px-12 py-2">
+                <x-side-nav-link :href="route('admin.permissions.index')"
+                                 :active="request()->routeIs('admin.permissions.*')"
+                                 class="px-12 py-2">
                     {{ __('Permissions') }}
                 </x-side-nav-link>
             </section>

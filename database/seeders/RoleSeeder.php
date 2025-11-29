@@ -62,6 +62,10 @@ class RoleSeeder extends Seeder
             'post own publish',
             'post own restore',
             'post own trash',
+
+            // New 2 more permissions
+            'date-backup',
+            'data-restore'
         ];
 
         // To display the progress bar

@@ -12,9 +12,14 @@ use Illuminate\View\View;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+// https://laravel.com/docs/12.x/authorization#authorizing-or-throwing-exceptions
 
 class UserManagementController extends Controller
 {
+    // to enable to use authorize()
+    // https://laravel.com/docs/12.x/authorization#authorizing-or-throwing-exceptions
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -33,7 +38,30 @@ class UserManagementController extends Controller
     public function create()
     {
         // Get All roles from database
-        $roles = Role::all();
+        //  $roles = Role::all();
+
+        // https://www.fundaofwebit.com/post/laravel-policy-using-spatie-roles-and-permission-tutorial-step-by-step
+        // Identify which role the logged-in user has
+        $loggedInUser = auth()->user();
+
+        if ($loggedInUser->hasRole('super-user'))
+        {
+            // The super-admin can create all role's account
+            $roles = Role::all();
+        }
+        elseif ($loggedInUser->hasRole('admin'))
+        {
+            // Except for super-admin (https://laravel.com/docs/12.x/queries#where-not-clauses)
+            $roles = Role::whereNotIn('name', ['super-user'])->get();
+        }
+        elseif ($loggedInUser->hasRole('staff'))
+        {
+            // Except for super-admin and admin
+            $roles = Role::whereNotIn('name', ['super-user', 'admin'])->get();
+        }
+        else {
+            $roles = collect();
+        }
 
         return view('admin.users.create')
             ->with('roles', $roles);
@@ -111,7 +139,22 @@ class UserManagementController extends Controller
         // - The method expects the user details to be given to it... the user that will be edited: (User $user)\
         // - The view call puts the roles and the user data into the packet that is sent to the view.
         // TODO: Update when we add Roles & Permissions
-        $roles = Collection::empty();
+        // $roles = Collection::empty();
+
+        // Call the policy
+        $this->authorize('update', $user);
+
+        $loggedInUser = auth()->user();
+
+        if ($loggedInUser->hasRole('super-user')) {
+            $roles = Role::all();
+        } elseif ($loggedInUser->hasRole('admin')) {
+            $roles = Role::whereNotIn('name', ['super-user'])->get();
+        } elseif ($loggedInUser->hasRole('staff')) {
+            $roles = Role::whereIn('name', ['staff', 'client'])->get();
+        } else {
+            $roles = collect();
+        }
 
         return view('admin.users.edit')
             ->with('roles', $roles)
@@ -190,7 +233,9 @@ class UserManagementController extends Controller
      * Confirm removal of the User resource from storage.  */
     public function delete(User $user)
     {
+        $roles = $user->getRoleNames();
         return view('admin.users.delete')
+            ->with('roles', $roles)
             ->with('user', $user);
     }
 
@@ -199,6 +244,10 @@ class UserManagementController extends Controller
      */
     public function destroy(User $user)
     {
+        // call the policy
+        $this->authorize('delete', $user);
+
+
         try {
             $removed_user = $user;
             $user->delete();

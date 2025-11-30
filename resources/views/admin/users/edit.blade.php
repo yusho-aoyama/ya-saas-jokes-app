@@ -71,30 +71,34 @@
                                 type="text"
                                 :value="old('role')"
                                 required autofocus autocomplete="role">
-                            <option>No Roles Provided</option>
+                            <option value="">-- Select Role --</option>
+
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                            @endforeach
                         </select>
                         <x-input-error
                             :messages="$errors->get('role')"
                             class="mt-2"/>
 
                         {{-- The Status Field --}}
-                        <x-input-label for="Status">
-                            {{__("Status")}}
-                        </x-input-label>
-                        <select
-                            id="Status"
-                            name="status"
-                            class="block mt-1 w-full px-2 py-1 border-gray-300
-                                        focus:outline-indigo-500 focus:outline-2 focus:ring-2 focus:ring-indigo-500
-                                        rounded-md shadow-sm"
-                            type="text"
-                            :value="old('status')"
-                            required autofocus autocomplete="status">
-                            <option>No Status Provided</option>
-                        </select>
-                        <x-input-error
-                            :messages="$errors->get('status')"
-                            class="mt-2"/>
+{{--                        <x-input-label for="Status">--}}
+{{--                            {{__("Status")}}--}}
+{{--                        </x-input-label>--}}
+{{--                        <select--}}
+{{--                            id="Status"--}}
+{{--                            name="status"--}}
+{{--                            class="block mt-1 w-full px-2 py-1 border-gray-300--}}
+{{--                                        focus:outline-indigo-500 focus:outline-2 focus:ring-2 focus:ring-indigo-500--}}
+{{--                                        rounded-md shadow-sm"--}}
+{{--                            type="text"--}}
+{{--                            :value="old('status')"--}}
+{{--                            required autofocus autocomplete="status">--}}
+{{--                            <option>No Status Provided</option>--}}
+{{--                        </select>--}}
+{{--                        <x-input-error--}}
+{{--                            :messages="$errors->get('status')"--}}
+{{--                            class="mt-2"/>--}}
 
                         {{-- The password field --}}
                         <x-input-label for="Password" :value="__('Password')">

@@ -53,16 +53,16 @@
                     <i class="fa-solid fa-user-friends"></i>
                 </dt>
                 <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $user->role ?? __("No Role") }}
+                    {{ $roles->isNotEmpty() ? $roles->join(', ') : __("No Role") }}
                 </dd>
                 {{-- Status --}}
-                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
-                    {{__("Status")}}:
-                    <i class="fa-solid fa-user-lock"></i>
-                </dt>
-                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $user->status ?? __("No Status") }}
-                </dd>
+{{--                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">--}}
+{{--                    {{__("Status")}}:--}}
+{{--                    <i class="fa-solid fa-user-lock"></i>--}}
+{{--                </dt>--}}
+{{--                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">--}}
+{{--                    {{ $user->status ?? __("No Status") }}--}}
+{{--                </dd>--}}
                 {{-- Added (Created at) and Updated (Updated at) Dates --}}
                 <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
                     {{ __("Added") }}
@@ -83,7 +83,7 @@
 
             <footer class="flex gap-4">
                 <x-primary-link-button
-                    href="{{ route('admin.users') }}"
+                    href="{{ route('admin.users.index') }}"
                     class="hover:bg-sky-500 gap-4">
                     <i class="fa-solid fa-list"></i>
                     <span>All Users</span>

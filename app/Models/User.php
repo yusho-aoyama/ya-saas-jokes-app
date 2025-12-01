@@ -72,5 +72,9 @@ class User extends Authenticatable implements MustVerifyEmail
             ->reduce(fn($carry, $part) => $carry.$part[0]);
     }
 
+    public function jokes()
+    {
+        return $this->hasMany(\App\Models\Joke::class);
+    }
 
 }

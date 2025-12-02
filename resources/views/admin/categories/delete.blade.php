@@ -39,7 +39,8 @@
                     Description
                 </dt>
                 <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $category->description }}
+                    {{-- Added '!!' not to display <p> tag --}}
+                    {!! $category->description !!}
                 </dd>
             </dl>
 

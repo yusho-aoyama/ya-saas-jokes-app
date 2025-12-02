@@ -19,9 +19,9 @@
                     New Category
                 </x-primary-link-button>
 
-                <div class="text-sm capitalize">
-                    Add Search Form Here
-                </div>
+{{--                <div class="text-sm capitalize">--}}
+{{--                    Add Search Form Here--}}
+{{--                </div>--}}
 
             </div>
         </header>
@@ -41,7 +41,7 @@
                 <tr class="odd:bg-gray-100">
                     <td class="p-2">{{ $category->title }}</td>
                     <td class="p-2">{!! Str::of($category->description??"")->stripTags() !!}</td>
-                    <td class="p-2">{{ $category->joke_count }}</td>
+                    <td class="p-2 text-center">{{ $category->jokes_count }}</td>
 
                     <td class="p-2 flex gap-4">
                         <x-primary-link-button
@@ -77,7 +77,8 @@
 
             <tfoot>
             <tr>
-                <td class="p-4" colspan="3">
+                {{-- update colspan 3 -> 4 --}}
+                <td class="p-4" colspan="4">
                     @if($categories->hasPages())
                         {{ $categories->links() }}
                     @else

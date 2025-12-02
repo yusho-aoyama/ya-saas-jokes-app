@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use App\Models\CategoryJoke;
 
 class CategoryManagementController extends Controller
 {
@@ -15,7 +16,8 @@ class CategoryManagementController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate();
+        // GEt the number of jokes ad "joke_count"
+        $categories = Category::withCount('jokes')->paginate();
 
         return view('admin.categories.index')
             ->with('categories', $categories);

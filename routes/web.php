@@ -10,20 +10,17 @@ use App\Http\Controllers\StaticPageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PermissionManagementController;
 use App\Http\Controllers\Admin\RoleManagementController;
+use App\Http\Controllers\CategoryController as GuestCategoryController;
 
 /* Home */
 Route::get('/', [StaticPageController::class, 'home'])
     ->name('home');
 
 /* Guest/Client Category Routes */
-Route::get('categories',[\App\Http\Controllers\CategoryController::class, 'index'])
+Route::get('categories',[GuestCategoryController::class, 'index'])
     ->name('categories.index');
-Route::get('categories/{category}', [\App\Http\Controllers\CategoryController::class, 'show'])
+Route::get('categories/{category}', [GuestCategoryController::class, 'show'])
     ->name('categories.show');
-Route::get('categories/create', [\App\Http\Controllers\CategoryController::class, 'create'])
-    ->name('categories.create');
-Route::post('categories/store', [\App\Http\Controllers\CategoryController::class, 'store'])
-    ->name('categories.store');
 
 /**
  *  create the Joke routes:
@@ -45,16 +42,13 @@ Route::resource('jokes', JokeController::class);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])
         ->name('dashboard');
-
-    /** Add Authenticated User Routes here */
 });
 
-/* Admin Routes (Roles and Permissions) */
+/* ----- Staff and Admin Routes (Roles and Permissions) ----- */
 Route::middleware(['auth', 'verified', 'role:staff|admin|super-admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-
         //Roles Management (for staff)
         Route::resource('roles', RoleManagementController::class)
             ->only(['index', 'show']);
@@ -71,11 +65,7 @@ Route::middleware(['auth', 'verified', 'role:staff|admin|super-admin'])
         Route::get('users/{user}/delete', [UserManagementController::class, 'delete'])
             ->name('users.delete');
 
-
-        // This will be removed when administration of users is created
-        // Route::get('users', [AdminController::class, 'users'])->name('users');
-
-
+        /* Category CRUD */
         /**
          *  create the Category's routes:
          *          admin.categories.index

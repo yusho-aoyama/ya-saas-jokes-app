@@ -60,6 +60,11 @@ class Joke extends Model
         return ($this->content->words($words));
     }
 
+    /**
+     *  The pivot table "category_joke" stores the pairs of (joke_id, category_id)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function categories()
     {
         return $this->belongsToMany(Category::class);

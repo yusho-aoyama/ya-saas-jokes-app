@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    // Add fillable fields
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
@@ -30,6 +31,10 @@ class Category extends Model
 
     /**
      * Get the attributes that should be cast.
+     *
+     * Raftopoulos, H. (2025, January 8). String Manipulation Made
+     * Easy with Laravel’s AsStringable Cast - Laravel News. Laravel
+     * News. https://laravelnews.com/asstringable
      *
      * @return array<string, string>
      */
@@ -57,5 +62,18 @@ class Category extends Model
         }
         return ($this->description->words($words));
     }
+
+    /**
+     *  A Category can belong to many jokes
+     *  belongsToMany() because this is a Many-to-Many relationship
+     *  - One joke can have multiple Categories
+     *  - One category can be assigned to multiple jokes
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function jokes()
+    {
+        return $this->belongsToMany(Joke::class, 'category_joke');
+    }
+
 
 }

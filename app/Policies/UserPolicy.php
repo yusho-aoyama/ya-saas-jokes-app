@@ -95,7 +95,6 @@ class UserPolicy
             return $targetUser->hasRole('client', 'staff');
         }
 
-        // それ以外は削除不可
         return false;
     }
 

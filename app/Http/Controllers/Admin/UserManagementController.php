@@ -106,7 +106,8 @@ class UserManagementController extends Controller
             }
 
             // Send a email when registered
-            $user->sendEmailVerificationNotification();
+            // Commentout -> because event will happen in the Models
+            //   $user->sendEmailVerificationNotification();
 
             flash()->success("User '{$user->name}' created successfully!",
                 [

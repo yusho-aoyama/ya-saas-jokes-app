@@ -35,6 +35,13 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Nortification email
+     */
+    protected $dispatchesEvents = [
+        'created' => \App\Events\UserRegistered::class,
+    ];
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>

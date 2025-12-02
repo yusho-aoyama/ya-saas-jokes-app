@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Events\UserRegistered;
+use App\Listeners\SendUserVerificationEmail;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,6 +16,13 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    protected $listen = [
+        \App\Events\UserRegistered::class => [
+            \App\Listeners\SendUserVerificationEmail::class,
+        ],
+    ];
+
 
     /**
      * Bootstrap any application services.

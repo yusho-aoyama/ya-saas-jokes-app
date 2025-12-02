@@ -16,6 +16,10 @@ use App\Http\Controllers\CategoryController as GuestCategoryController;
 Route::get('/', [StaticPageController::class, 'home'])
     ->name('home');
 
+/* About */
+Route::get('/about', [StaticPageController::class, 'about'])
+    ->name('about');
+
 /* Guest/Client Category Routes */
 Route::get('categories',[GuestCategoryController::class, 'index'])
     ->name('categories.index');

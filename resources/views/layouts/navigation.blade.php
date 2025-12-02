@@ -15,6 +15,10 @@
                     <x-nav-link :href="route('home')" :achieve="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+                    <!-- About Page -->
+                    <x-nav-link :href="route('about')" :achieve="request()->routeIs('about')">
+                        {{ __('About') }}
+                    </x-nav-link>
 
                     @auth()
                         <x-nav-link :href="route('jokes.index')"

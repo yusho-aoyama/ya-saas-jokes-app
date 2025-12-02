@@ -69,18 +69,17 @@ class LikeDislike extends Component
     }
 
 
-
     private function updateVote(int $value): void
     {
-        // The method checks to see if there is a vote by this user for this joke. If there is then the vote is updated, otherwise the vote is created.
+        // The method checks to see if there is a vote by this user for this joke.
+        // If there is then the vote is updated, otherwise the vote is created.
         if ($this->userVote) {
-            $this->joke
-                ->votes()
-                ->update([
-                    'user_id' => auth()->id(),
-                    'vote' => $value
-                ]);
+            // renew if there are existing votes
+            $this->userVote->update([
+                'vote' => $value
+            ]);
         } else {
+            // create new
             $this->userVote = $this->joke
                 ->votes()
                 ->create([
@@ -89,12 +88,14 @@ class LikeDislike extends Component
                 ]);
         }
 
-        // To reload the screen automatically (= to reflect the changes to the screen)
+        // update Like / Dislike number
         $this->setLikesAndDislikesCount($value);
 
-        // Keep the latest vote
+        // keep the latest votes
         $this->lastUserVote = $value;
     }
+
+
 
     private function setLikesAndDislikesCount(int $value): void
     {

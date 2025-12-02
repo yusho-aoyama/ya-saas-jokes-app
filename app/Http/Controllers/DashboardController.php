@@ -20,8 +20,7 @@ class DashboardController extends Controller
         $votes = $user->jokes()
             ->with('votes')
             ->get()
-            ->pluck('votes')  // Make all jokes collections
-            ->flatten();
+            ->flatMap(fn($joke) => $joke->votes); // make it 1 collectin by 'flatMap'
 
         $likes = $votes->where('vote', 1)->count();
         $dislikes = $votes->where('vote', -1)->count();

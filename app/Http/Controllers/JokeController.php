@@ -80,7 +80,12 @@ class JokeController extends Controller
             ]);
 
             // Create a new category
-            $joke = Joke::create($validated);
+            $joke = Joke::create([
+                'title'   => $validated['title'],
+                'content' => $validated['content'],
+                'user_id' => auth()->id(),  // Add user_id
+            ]);
+
 
             flash()->success("Joke '{$joke->title}' created successfully!",
                 [

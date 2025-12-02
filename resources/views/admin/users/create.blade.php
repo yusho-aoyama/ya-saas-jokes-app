@@ -27,18 +27,45 @@
 
 
                     <div class="w-full mt-4 sm:mt-0 flex flex-col space-y-2  text-neutral-700">
-
-                        <x-input-label for="Name">
-                            {{__("Name")}}
+                        <!-- Given Name -->
+                        <x-input-label for="given_name">
+                            {{ __("Given Name") }}
                         </x-input-label>
                         <x-text-input
                             type="text"
-                            id="Name"
-                            name="name"/>
+                            id="given_name"
+                            name="given_name"
+                            :value="old('given_name')" />
+                        <x-input-error
+                            :messages="$errors->get('given_name')"
+                            class="mt-2"/>
+
+                        {{-- Family Name --}}
+                        <x-input-label for="family_name">
+                            {{ __("Family Name") }}
+                        </x-input-label>
+                        <x-text-input
+                            type="text"
+                            id="family_name"
+                            name="family_name"
+                            :value="old('family_name')"
+                            required />
+                        <x-input-error
+                            :messages="$errors->get('family_name')"
+                            class="mt-2"/>
+
+                        {{-- Name (Preferred Name) --}}
+                        <x-input-label for="name">
+                            {{ __("Preferred Name") }}
+                        </x-input-label>
+                        <x-text-input
+                            type="text"
+                            id="name"
+                            name="name"
+                            :value="old('name')" />
                         <x-input-error
                             :messages="$errors->get('name')"
                             class="mt-2"/>
-
 
                         <x-input-label for="Email">
                             {{__("Email")}}

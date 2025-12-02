@@ -29,17 +29,45 @@
 
 
                     <div class="w-full mt-4 sm:mt-0 flex flex-col space-y-2  text-neutral-700">
-                        {{-- The Name Field --}}
-                        <x-input-label for="Name">
-                            {{__("Name")}}
+                        {{-- The Given Name Field --}}
+                        <x-input-label for="given_name">
+                            {{ __("Given Name") }}
                         </x-input-label>
                         <x-text-input
                             type="text"
-                            id="Name"
+                            id="given_name"
+                            name="given_name"
                             class="block mt-1 w-full"
+                            :value="old('given_name', $user->given_name)" />
+                        <x-input-error
+                            :messages="$errors->get('given_name')"
+                            class="mt-2"/>
+
+                        {{-- The Family Name Field --}}
+                        <x-input-label for="family_name">
+                            {{ __("Family Name") }}
+                        </x-input-label>
+                        <x-text-input
+                            type="text"
+                            id="family_name"
+                            name="family_name"
+                            class="block mt-1 w-full"
+                            :value="old('family_name', $user->family_name)"
+                            required />
+                        <x-input-error
+                            :messages="$errors->get('family_name')"
+                            class="mt-2"/>
+
+                        {{-- The Preferred Name Field --}}
+                        <x-input-label for="name">
+                            {{ __("Preferred Name") }}
+                        </x-input-label>
+                        <x-text-input
+                            type="text"
+                            id="name"
                             name="name"
-                            :value="old('name')??$user->name"
-                            required autofocus autocomplete="name"/>
+                            class="block mt-1 w-full"
+                            :value="old('name', $user->name)" />
                         <x-input-error
                             :messages="$errors->get('name')"
                             class="mt-2"/>
@@ -74,7 +102,10 @@
                             <option value="">-- Select Role --</option>
 
                             @foreach ($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                <option value="{{ $role->name }}"
+                                    {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
                             @endforeach
                         </select>
                         <x-input-error

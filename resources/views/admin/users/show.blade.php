@@ -30,12 +30,26 @@
             - The Confirm Delete button will use a secondary button.
         --}}
             <dl class="grid grid-cols-6 m-4 w-full shadow mb-6">
-                {{-- Name --}}
+                {{-- Given Name --}}
                 <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
-                    {{__("Name")}}:
+                    {{__("Given Name")}}:
                 </dt>
                 <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
-                    {{ $user->name ?? __("No Name provided") }}
+                    {{ $user->given_name ?? __("No Given Name provided") }}
+                </dd>
+                {{-- Family Name --}}
+                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
+                    {{__("Family Name")}}:
+                </dt>
+                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
+                    {{ $user->family_name ?? __("No Family Name provided") }}
+                </dd>
+                {{-- Preferred Name --}}
+                <dt class="col-span-1 bg-gray-200 border-b-1 border-b-gray-300 p-2 text-gray-700">
+                    {{__("Preferred Name")}}:
+                </dt>
+                <dd class="col-span-5 border-b-1 border-b-gray-300 p-2">
+                    {{ $user->name ?? __("No Preferred Name provided") }}
                 </dd>
 
                 {{-- Email --}}

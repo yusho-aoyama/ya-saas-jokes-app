@@ -17,9 +17,34 @@
         @csrf
         @method('patch')
 
+        {{-- Given Name --}}
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <x-input-label for="given_name" :value="__('Given Name')" />
+            <x-text-input id="given_name" name="given_name" type="text"
+                          class="mt-1 block w-full"
+                          :value="old('given_name', $user->given_name)"
+                          autocomplete="given-name" />
+            <x-input-error class="mt-2" :messages="$errors->get('given_name')" />
+        </div>
+
+        {{-- Family Name --}}
+        <div>
+            <x-input-label for="family_name" :value="__('Family Name')" />
+            <x-text-input id="family_name" name="family_name" type="text"
+                          class="mt-1 block w-full"
+                          :value="old('family_name', $user->family_name)"
+                          required autocomplete="family-name" />
+            <x-input-error class="mt-2" :messages="$errors->get('family_name')" />
+        </div>
+
+        {{-- Name (Preferred Name) --}}
+        <div>
+            <x-input-label for="name" :value="__('Preferred Name')" />
+            <x-text-input id="name" name="name" type="text"
+                          class="mt-1 block w-full"
+                          :value="old('name', $user->name)"
+                          autocomplete="nickname" />
+            {{-- Removed require --}}
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 

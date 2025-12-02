@@ -79,17 +79,31 @@ class UserManagementController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name'=>['required','min:2', 'max:192',],
+                // Update validation
+                'given_name' => ['nullable', 'string', 'max:255'],
+                'family_name' => ['required', 'string', 'min:1', 'max:255'],
+                'name' => ['nullable', 'string', 'min:1', 'max:64'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Password::defaults()],
                 'role'=>['nullable',],
             ]);
 
+            if (empty($validated['name'])) {
+                $validated['name'] = $validated['family_name'];
+            }
+
             $user = User::create([
-                'name' => $request->name,
+                'given_name' => $validated['given_name'] ?? null,
+                'family_name' => $validated['family_name'],
+                'name' => $validated['name'],
                 'email' => mb_strtolower($request->email),
                 'password' => Hash::make($request->password),
             ]);
+
+            // Asiign role if it was selected
+            if (!empty($validated['role'])) {
+                $user->assignRole($validated['role']);
+            }
 
             // Send a email when registered
             $user->sendEmailVerificationNotification();
@@ -169,7 +183,10 @@ class UserManagementController extends Controller
         try {
             // the method should not change from the default that was created by the artisan command.
             $validated = $request->validate([
-                'name' => ['required', 'min:2', 'max:192',],
+                // Update the validation
+                'given_name' => ['nullable', 'string', 'max:255'],
+                'family_name' => ['required', 'string', 'min:1', 'max:255'],
+                'name' => ['nullable', 'string', 'min:1', 'max:64'],
                 'email' => [
                     'required',
                     'string',
@@ -186,6 +203,16 @@ class UserManagementController extends Controller
                 ],
                 'role' => ['nullable',],
             ]);
+
+            if (empty($validated['name'])) {
+                $validated['name'] = $validated['family_name'];
+            }
+
+            if (!empty($validated['role'])) {
+                $user->syncRoles([$validated['role']]); // Update to the selected role
+            } else {
+                $user->syncRoles([]); // Reset if no role is selected
+            }
 
             // Remove password if null
             // check to see if the validated password is null, and if so remove the array key so it does not violate the "required" and "not null" data requirements in the model.

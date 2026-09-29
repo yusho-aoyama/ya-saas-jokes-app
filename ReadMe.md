@@ -1,42 +1,169 @@
 # YA-SAAS-JOKE-APP
 
-## Description
+Laravelを使用して開発した、ジョークの投稿・管理を行うWebアプリケーションです。
 
-YA-SAAS-JOKE-APP is a small web application built using the Laravel PHP framework following
-the MVC pattern. The project allows users to view jokes, manage categories, and so on in a
-simple web
-interface.
+LaravelにおけるWebアプリケーション開発の基礎を学ぶことを目的として、MVCアーキテクチャ、認証、CRUD、データベースリレーション、ルーティング、ユーザー権限管理に加え、Livewireを使用したインタラクティブな機能を実装しました。
 
-Main features include:
+## プロジェクト概要
 
-* Static pages with a static page controller
-* User authentication: registration, login, and logout
-* BREAD/CRUD actions for jokes and categories
-* HTTP request routing
-* Relationships between tables, including many-to-many between jokes and categories
-* Basic roles and permissions for users
+ユーザーがジョークを閲覧・投稿・編集・削除できるWebアプリケーションです。
 
-The project was developed to learn how to build a web application using Laravel and to practice implementing MVC features.
+ジョークには複数のカテゴリーを設定できるほか、Livewireを利用したLike / Dislike機能を実装しています。また、ユーザーのロールに応じて利用できる機能を制御しています。
 
-## Table of Contents
+このプロジェクトを通して、Laravelを使用したWebアプリケーションにおける、リクエストからデータベース処理、画面表示までの基本的な流れを実装しながら学習しました。
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Credits](#credits)
-* [License](#license)
+## 主な機能
 
-## Installation
+- Home・Aboutなどの静的ページ表示
+- ユーザー登録・ログイン・ログアウト
+- セッションを利用したログイン状態の管理
+- ジョークの一覧表示
+- ジョークの新規登録・編集・削除（CRUD）
+- ジョークへの複数カテゴリーの設定
+- ジョークとカテゴリーの多対多（Many-to-Many）リレーション
+- Livewireを使用したジョークへのLike / Dislike機能
+- Users・Jokes・Votes・Categories間のデータ管理
+- ユーザーロール・権限によるアクセス制御
+- Admin / Staff / Clientのロール管理
+- Laravel Routingを使用したHTTPリクエストの振り分け
+- Tailwind CSSを使用したUI
+- レスポンシブ対応
 
-To set up the project on your local machine:
+## 技術的に学んだこと
 
-1. Install Laravel using Composer.
-2. Install PHP 8.4.10 and Composer 2.8.11 (used in my local environment with Laragon).
-3. Clone the repository from GitHub.
-4. Run `composer install` to install PHP dependencies.
-5. Run `npm install` to install Node.js dependencies (npm version 11.4.2).
-6. Configure your `.env` file with database details (MySQL 8 used in Laragon).
-7. Run `php artisan migrate --seed` to create the database and add test data.
-8. Start the server with `php artisan serve`.
+### MVCアーキテクチャ
+
+LaravelのMVCパターンを使用し、Model・View・Controllerの役割を分けてアプリケーションを構築しました。
+
+- **Model**：データベースとのやり取りやリレーションを定義
+- **View** ：ユーザーに表示する画面を担当
+- **Controller**：リクエストを受け取り、ModelとViewをつなぐ処理を担当
+
+これにより、Laravelにおける基本的なリクエスト処理の流れを理解しました。
+
+### データベースリレーション
+
+ジョークとカテゴリーの関係には、多対多（Many-to-Many）のリレーションを実装しました。
+
+1つのジョークに複数のカテゴリーを設定でき、同じカテゴリーを複数のジョークで使用できる構成です。
+
+この実装を通して、Laravel Eloquentを使用したモデル間のリレーションと、中間テーブルを利用したデータ管理について学習しました。
+
+### 認証・権限管理
+
+ユーザー登録・ログイン・ログアウトなどの基本的な認証機能に加えて、ユーザーのロールに応じた権限管理を実装しました。
+
+Admin・Staff・Client Userなどのロールに応じて利用できる機能を制限することで、Webアプリケーションにおける認証・認可とアクセス制御の基本を学習しました。
+
+### Livewireによるインタラクティブ機能
+
+ジョークに対するLike / Dislike機能にはLivewireを使用しました。
+
+ページ全体を再読み込みすることなくユーザー操作に応じて表示を更新する機能を実装し、LaravelとLivewireを組み合わせたステートフルなUIコンポーネントの基本を学習しました。
+
+## 使用技術
+
+- PHP
+- Laravel
+- MySQL
+- SQLite
+- Blade
+- Livewire
+- Tailwind CSS
+- HTML / CSS
+- JavaScript
+- Composer
+- npm
+- Git / GitHub
+- Laragon
+
+## 開発環境
+
+- PHP 8.4.10
+- Composer 2.8.11
+- MySQL 8
+- npm 11.4.2
+- Laragon
+
+## セットアップ
+
+1. リポジトリをクローン
+
+`git clone <repository-url>
+cd ya-saas-jokes-app`
+
+2. PHP依存パッケージをインストール
+
+`composer install`
+
+3. Node.js依存パッケージをインストール
+
+`npm install`
+
+4. 環境変数を設定
+
+`.env.example` をコピーして `.env` を作成します。
+
+`cp .env.example .env`
+
+データベース接続情報など、必要な環境変数を設定してください。
+
+5. Application Keyを生成
+
+`php artisan key:generate`
+
+6. データベースを作成
+
+`php artisan migrate --seed`
+
+Migrationによるテーブル作成と、Seederによるテストデータの登録を行います。
+
+7. アプリケーションを起動
+
+`php artisan serve`
+
+ブラウザから以下へアクセスします。
+
+http://127.0.0.1:8000
+
+## 使用方法
+
+1. アプリケーションへアクセス
+
+2. 新規ユーザーを登録、またはSeederで作成されたテストユーザーでログイン
+
+3. ジョークの一覧を表示
+
+4. ジョークの追加・編集・削除
+
+5. ジョークにカテゴリーを設定
+
+6. 管理者ユーザーの場合、ユーザー・ロール・カテゴリーなどの管理機能を利用
+
+## テスト
+
+Seederで作成したテストユーザー・カテゴリーを使用し、主に以下の機能について手動テストを実施しました。
+
+- ユーザー登録
+- ログイン・ログアウト
+- ジョークのCRUD
+- カテゴリー管理
+- ユーザーロールごとのアクセス・操作
+- ジョークとカテゴリーのリレーション
+
+## このプロジェクトで得た経験
+
+このプロジェクトでは、Laravelを使用したWebアプリケーション開発の基礎として、MVC、Routing、CRUD、認証・認可、Eloquent ORMによるデータベース操作とリレーションを実際に実装しました。
+
+特に、単純なデータの登録・表示だけでなく、ジョークとカテゴリーの多対多リレーションやユーザーロールによる権限管理を実装することで、複数のテーブルやユーザー権限を扱うWebアプリケーションの基本構造を学びました。
+
+## 開発者
+
+Yusho Aoyama
+
+## License
+
+このプロジェクトは学習・課題制作を目的として開発したものです。
 
 ## Usage
 
@@ -46,327 +173,113 @@ Once the server is running:
 2. Register a new user or log in using the seeded test users.
 3. Navigate through the application to view jokes, categories, and admin features (if logged in as an admin).
 
-[//]: # (Screenshots of the application:)
+## スクリーンショット
 
-[//]: # ()
-[//]: # (* Home Page &#40;Guest Welcome&#41;)
+### ホーム画面
 
-[//]: # (* About Page)
+#### ログイン前
 
-[//]: # (* Joke Page)
+![ホーム画面（ゲスト）](_docs/images/home-guest.png)
 
-[//]: # (* Admin User Page)
+未ログインユーザー向けのホーム画面です。
+登録されているジョークがランダムで１つ表示されます。
 
-[//]: # (* Logged-in Home Page)
+#### ログイン後
 
-## Credits
+![ホーム画面（ログイン後）](_docs/images/home-after-login.png)
 
-Developed by: **Yusho Aoyama**
-No third-party assets were used in this project, only Laravel and standard packages.
+ログイン後のホーム画面では、ランダム表示されたジョークへ評価(Like・Dislike)ができます。
 
-## License
+### ログイン画面
 
-This project is for educational purposes only and is not licensed for commercial use.
+![ログイン画面](_docs/images/login.png)
 
-## Features
+### ログイン後のダッシュボード画面
 
-* Show all jokes with categories
-* Add, edit, and delete jokes (CRUD)
-* Assign multiple categories to jokes
-* Admin role can manage users, roles, and categories
-* Simple responsive interface
+![ログイン後のダッシュボード画面](_docs/images/client-after-login.png)
 
-## How to Contribute
+ログイン後、自身の投稿したジョークの数やLike・Dislike数などのステータスが確認できます。また、メニューからユーザー向けの機能へアクセスできます。
 
-This project is for personal learning and assessment, so contributions are not required.
+### ジョーク・カテゴリー 一覧
 
-## Tests
+![ジョーク一覧](_docs/images/joke-client.png)
 
-Basic manual testing was done using seeded users and categories. You can test login, registration, and CRUD features by following the Usage instructions.
+登録されているジョーク一覧を確認できます。
 
+![マイジョーク](_docs/images/client-myjoke.png)
 
-[//]: # (# YA-SAAS-JOKE-APP-2025-s2)
+自身が登録したジョークのみ編集・削除ができます。
 
-[//]: # (<a name="top" id="top" ></a>)
+![ジョーク作成](_docs/images/create-joke.png)
 
-[//]: # ()
-[//]: # ()
-[//]: # (*Based on the Blade & Breeze Starter Kit provided with Laravel versions before Laravel 12.*)
+ジョークを新規作成する画面です。
 
-[//]: # ()
-[//]: # (### Built With)
+![カテゴリー一覧](_docs/images/category-list.png)
 
-[//]: # ()
-[//]: # ([![PHP][Php.com]][Php-url])
+登録されているジョークとカテゴリーを確認できます。
 
-[//]: # ([![Laravel][Laravel.com]][Laravel-url])
+### プロフィール画面
 
-[//]: # ([![Tailwindcss][Tailwindcss.com]][Tailwindcss-url])
+![プロフィール編集画面](_docs/images/client-profile.png)
 
-[//]: # ([![Livewire][Livewire.com]][Livewire-url])
+ユーザーは自身のプロフィール（名前・メール・パスワード）を編集または削除できます。
 
-[//]: # ([![Inertia][Inertia.com]][Inertia-url])
+### About画面
 
-[//]: # ()
-[//]: # (### Editor of choice)
+アプリケーションについての情報を表示する静的ページです。
 
-[//]: # ()
-[//]: # ([![PhpStorm][PhpStorm.com]][PhpStorm-url] )
+![About画面](_docs/images/about-page.png)
 
-[//]: # ([![JetBrains][JetBrains.com]][JetBrains-url])
+### 管理者画面 - ダッシュボード
 
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
+![管理者画面](_docs/images/admin-page.png)
 
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (## Description)
+管理者ユーザーは、ユーザーやロールなどの管理機能を利用できます。
 
-[//]: # ()
-[//]: # (A starter kit for Laravel based on Laravel's Blade templating engine, TailwindCSS v4, HyperUI components and FontAwesome Free icons.)
+### 管理者画面 - ユーザー
 
-[//]: # ()
-[//]: # (It contains three sections:)
+#### ユーザーリスト
 
-[//]: # ()
-[//]: # (- Static Layout, Controller and Pages)
+![管理者画面-ユーザー一覧](_docs/images/user-list.png)
 
-[//]: # (- Authenticated User Layout and Pages)
+ユーザー一覧を閲覧できます。
 
-[//]: # (- Administration Layout, Controller and Pages)
+#### ユーザー作成
 
-[//]: # ()
-[//]: # (The project was developed as a re-write of the "Retro Blade Kit" also by Adrian Gould.)
+![管理者画面-ユーザー作成](_docs/images/create-new-user.png)
 
-[//]: # ()
-[//]: # (It provides a base template for the creation of a "SaaS" style application, omitting sections that may tie to a specific vendor such as a payment system. )
+ユーザーを作成する画面です。
 
-[//]: # ()
-[//]: # (#### General Welcome/Home Page)
+#### ユーザー詳細
 
-[//]: # ()
-[//]: # (![Welcome Page Screenshot]&#40;_docs/images/screenshot.png&#41;)
+![管理者画面-ユーザー詳細](_docs/images/user-detail.png)
 
-[//]: # ()
-[//]: # (#### Authenticated User Dashboard)
+ユーザーの詳細情報を閲覧する画面です。
 
-[//]: # ()
-[//]: # (![Authenticated User Dashboard]&#40;_docs/images/screenshot-d.png&#41;)
+#### ユーザー編集
 
-[//]: # ()
-[//]: # (#### Admin Dashboard)
+![管理者画面-ユーザー編集](_docs/images/user-edit.png)
 
-[//]: # ()
-[//]: # (![Administration Dashboard]&#40;_docs/images/screenshot-a.png&#41;)
+ユーザーの情報を編集する画面です。
+名前・ロール・メールアドレス・パスワードを編集できます。
 
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
+### 管理者画面 - ロール
 
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (## Table of Contents)
+#### ロールリスト
 
-[//]: # ()
-[//]: # (- [Description]&#40;#description&#41;)
+![管理者画面-ロール一覧](_docs/images/role-list.png)
 
-[//]: # (- [Installation]&#40;#installation&#41;)
+ユーザーロール一覧を閲覧できます。
 
-[//]: # (- [Credits]&#40;#credits&#41;)
+#### ロール詳細
 
-[//]: # (- [Licence]&#40;#licence&#41;)
+![管理者画面-ロール詳細](_docs/images/role-detail.png)
 
-[//]: # (- [Badges]&#40;#badges&#41;)
+ロールの詳細情報を閲覧する画面です。
 
-[//]: # (- [Tests]&#40;#tests&#41;)
+#### ロール編集
 
-[//]: # (- [Contact]&#40;#contact&#41;)
+![管理者画面-ロール編集](_docs/images/role-edit.png)
 
-[//]: # ()
-[//]: # (## Installation)
-
-[//]: # ()
-[//]: # (Remember to run `composer install` and `artisan migrate` to make sure all tables are created, and packages correctly installed.)
-
-[//]: # ()
-[//]: # (### Via Laravel Herd)
-
-[//]: # ()
-[//]: # (One-click install a new application using this starter kit through [Laravel Herd]&#40;https://herd.laravel.com&#41;:)
-
-[//]: # ()
-[//]: # (<a href="https://herd.laravel.com/new?starter-kit=adygcode/base-blade-kit"><img src="https://img.shields.io/badge/Install%20with%20Herd-fff?logo=laravel&logoColor=f53003" alt="Install with Herd"></a>)
-
-[//]: # ()
-[//]: # (### Via the Laravel Installer)
-
-[//]: # ()
-[//]: # (Create a new Laravel application using this starter kit through the official [Laravel Installer]&#40;https://laravel.com/docs/12.x/installation#installing-php&#41;:)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (  laravel new my-app --using=adygcode/base-blade-kit)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Replace `my-app` with the name of your project, using kebab-case.)
-
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # (## Credits)
-
-[//]: # ()
-[//]: # (This template is built using:)
-
-[//]: # ()
-[//]: # (- Font Awesome. &#40;n.d.&#41;. Fontawesome.com. https://fontawesome.com)
-
-[//]: # (- Laravel - The PHP Framework For Web Artisans. &#40;2011&#41;. Laravel.com. https://laravel.com)
-
-[//]: # (- Laravel Bootcamp - Learn the PHP Framework for Web Artisans. &#40;n.d.&#41;. Bootcamp.laravel.com. https://bootcamp.laravel.com/)
-
-[//]: # (- PHP: Hypertext Preprocessor. &#40;n.d.&#41;. Www.php.net. https://php.net)
-
-[//]: # (- Professional README Guide. &#40;n.d.&#41;. Coding-Boot-Camp.github.io. Retrieved April 15, 2024, from https://coding-boot-camp.github.io/full-stack/github/professional-guide)
-
-[//]: # (- TailwindCSS. &#40;2023&#41;. Tailwind CSS - Rapidly build modern websites without ever leaving your HTML. Tailwindcss.com. https://tailwindcss.com/)
-
-[//]: # (- Free Open Source Tailwind CSS v4 Components | HyperUI. &#40;2025&#41;. HyperUI. https://www.hyperui.dev/)
-
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (## Badges)
-
-[//]: # ()
-[//]: # ([![Forks][forks-shield]][forks-url])
-
-[//]: # ([![Issues][issues-shield]][issues-url])
-
-[//]: # ([![Educational Community Licence][licence-shield]][licence-url])
-
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # (## Tests)
-
-[//]: # ()
-[//]: # (TBD)
-
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # (## Contact)
-
-[//]: # ()
-[//]: # (Adrian Gould: Lecturer &#40;ASL1&#41;, [North Metropolitan TAFE]&#40;https://northmetrotafe.wa.edu.au&#41;, Perth WA)
-
-[//]: # (- GitHub Pages: [https://adygcode.github.io]&#40;https://adygcode.github.io&#41;)
-
-[//]: # (- GitHub Repos: [https://github.com/AdyGCode]&#40;https://github.com/AdyGCode&#41;)
-
-[//]: # (- Starter Kit Repo: [Retro Blade Starter Kit]&#40;https://github.com/AdyGCode/retro-blade-kit&#41;)
-
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (## Licence)
-
-[//]: # ()
-[//]: # (The Laravel "Base Blade Kit" Starter Kit is open-sourced software licensed under the MIT license.)
-
-[//]: # ()
-[//]: # ()
-[//]: # (<p align="right">&#40;<a href="#top">back to top</a>&#41;</p>)
-
-[//]: # ()
-[//]: # ()
-[//]: # ()
-[//]: # (---)
-
-[//]: # ()
-[//]: # ()
-[//]: # ([forks-shield]: http://img.shields.io/github/forks/adygcode/base-blade-kit.svg?style=for-the-badge)
-
-[//]: # ()
-[//]: # ([forks-url]: https://github.com/AdyGCode/base-blade-kit/network/members)
-
-[//]: # ()
-[//]: # ([issues-shield]: http://img.shields.io/github/issues/adygcode/base-blade-kit.svg?style=for-the-badge)
-
-[//]: # ()
-[//]: # ([issues-url]: https://github.com/adygcode/base-blade-kit/issues)
-
-[//]: # ()
-[//]: # ([licence-shield]: https://img.shields.io/github/license/adygcode/base-blade-kit.svg?style=for-the-badge)
-
-[//]: # ()
-[//]: # ([licence-url]: https://github.com/adygcode/base-blade-kit/blob/main/License.md)
-
-[//]: # ()
-[//]: # ([product-screenshot]: _docs/images/screenshot.png)
-
-[//]: # ()
-[//]: # ([Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-
-[//]: # ()
-[//]: # ([Laravel-url]: https://laravel.com)
-
-[//]: # ()
-[//]: # ([Tailwindcss.com]: https://img.shields.io/badge/Tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-
-[//]: # ()
-[//]: # ([Tailwindcss-url]: https://tailwindcss.com)
-
-[//]: # ()
-[//]: # ([Livewire.com]: https://img.shields.io/badge/Livewire-4E56A6?style=for-the-badge&logo=livewire&logoColor=white)
-
-[//]: # ()
-[//]: # ([Livewire-url]: https://livewire.laravel.com)
-
-[//]: # ()
-[//]: # ([Inertia.com]: https://img.shields.io/badge/Inertia-9553E9?style=for-the-badge&logo=inertia&logoColor=white)
-
-[//]: # ()
-[//]: # ([Inertia-url]: https://inertiajs.com)
-
-[//]: # ()
-[//]: # ([Php.com]: https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white)
-
-[//]: # ()
-[//]: # ([Php-url]: https://inertiajs.com)
-
-[//]: # ()
-[//]: # ([JetBrains.com]: https://img.shields.io/badge/JetBrains-000000?style=for-the-badge&logo=jetbrains&logoColor=white)
-
-[//]: # ()
-[//]: # ([JetBrains-url]: https://jetbrains.com)
-
-[//]: # ()
-[//]: # ([PhpStorm.com]: https://img.shields.io/badge/phpstorm-000000?style=for-the-badge&logo=phpstorm&logoColor=white)
-
-[//]: # ()
-[//]: # ([PhpStorm-url]: https://www.jetbrains.com/phpstorm/)
-
+ロールの情報を編集する画面です。
+ロールの名前・権限を編集できます。
